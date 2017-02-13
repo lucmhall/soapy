@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const { serviceBuilder } = require('./lib/builder');
-const { baseDir, wsdl: wsdlUrl } = require('./config');
+const { baseDir, wsdl: wsdlUrl, appName } = require('./config');
 const compilers = require('./lib/compilers');
 
 function fetchWSDL(wsdl) {
@@ -15,9 +15,14 @@ function fetchWSDL(wsdl) {
       fs.mkdirSync(baseDir);
     }
     fs.writeFile(path.join(baseDir, 'app.js'), compilers.app(), (writeErr) => {
-        if (writeErr) {
-          return console.error(err);
-        }
+      if (writeErr) {
+        return console.error(err);
+      }
+    });
+    fs.writeFile(path.join(baseDir, 'package.json'), compilers.package({ appName }), (writeErr) => {
+      if (writeErr) {
+        return console.error(err);
+      }
     });
     Object.keys(description).forEach((serviceName) => {
       const preparedServices = serviceBuilder(serviceName, description[serviceName]);
