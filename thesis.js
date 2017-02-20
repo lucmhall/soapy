@@ -22,7 +22,7 @@ function fetchWSDL(wsdl) {
       }
     });
 
-    fs.writeFile(path.join(baseDir, 'app.js'), compilers.app(serviceNames), (writeErr) => {
+    fs.writeFile(path.join(baseDir, 'app.js'), compilers.app({ wsdl, serviceNames }), (writeErr) => {
       if (writeErr) {
         return console.error(err);
       }
