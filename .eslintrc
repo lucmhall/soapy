@@ -3,6 +3,6 @@
         "airbnb"
     ],
     "rules": {
- 
+        "consistent-return": 0
     }
 }
