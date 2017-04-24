@@ -18,12 +18,14 @@ function fetchWSDL(wsdl) {
 
     fs.writeFile(path.join(baseDir, 'package.json'), compilers.package({ appName }), (writeErr) => {
       if (writeErr) {
+        /* eslint-disable no-console */
         return console.error(err);
       }
     });
 
     fs.writeFile(path.join(baseDir, 'app.js'), compilers.app({ wsdl, serviceNames }), (writeErr) => {
       if (writeErr) {
+        /* eslint-disable no-console */
         return console.error(err);
       }
     });
