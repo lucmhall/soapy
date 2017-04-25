@@ -11,10 +11,27 @@ function fetchWSDL(wsdl) {
     const description = client.describe();
     const serviceNames = Object.keys(description);
 
+    console.log(client.wsdl);
     // ensure main app dir exsits
     if (!fs.existsSync(baseDir)) {
       fs.mkdirSync(baseDir);
     }
+    const filesToMove = [
+      'lib/jsonToXML.js',
+      'lib/XMLToJson.js',
+    ];
+
+    if (!fs.existsSync(path.join(baseDir, 'lib'))) {
+      fs.mkdirSync(path.join(baseDir, 'lib'));
+    }
+
+    filesToMove.forEach((file) => {
+      fs.readFile(path.join(file), 'utf8', (readErr, contents) => {
+        if (!readErr) {
+          fs.writeFileSync(path.join(baseDir, file), contents);
+        }
+      });
+    });
 
     fs.writeFile(path.join(baseDir, 'package.json'), compilers.package({ appName }), (writeErr) => {
       if (writeErr) {
