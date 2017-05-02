@@ -6,6 +6,7 @@
   "dependencies": {
     "express": "^4.14.1",
     "handlebars": "^4.0.6",
+    "isomorphic-fetch": "^2.2.1",
     "soap": "^0.18.0",
     "xmldom": "^0.1.27"
   },
