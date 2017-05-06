@@ -17,8 +17,9 @@ function fetchWSDL(urlWSDL) {
 
 
       bindings.forEach((binding) => {
-        console.log(binding.name);
+        console.log(binding);
       });
+      bindings.forEach(serviceBuilder);
     });
 }
 // function fetchWSDL(wsdl) {
