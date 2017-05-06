@@ -2,7 +2,7 @@ const soap = require('soap');
 const fs = require('fs');
 const path = require('path');
 
-const { serviceBuilder } = require('./lib/builder');
+const { portBuilder } = require('./lib/builder');
 const communicate = require('./lib/communicate');
 const soapHelpers = require('./lib/soapHelpers');
 const { baseDir, wsdl: wsdlUrl, appName } = require('./config');
@@ -19,8 +19,9 @@ function fetchWSDL(urlWSDL) {
       bindings.forEach((binding) => {
         console.log(binding);
       });
-      bindings.forEach(serviceBuilder);
-    });
+      bindings.forEach(portBuilder);
+    })
+    .catch(console.log);
 }
 // function fetchWSDL(wsdl) {
 //   soap.createClient(wsdl, (err, client) => {
