@@ -11,11 +11,13 @@ function fetchWSDL(urlWSDL) {
   communicate.get(urlWSDL)
     .then((rawWSDL) => {
       const wsdl = XMLToJson(rawWSDL);
+      const definitions = soapHelpers.findDefinitions(wsdl);
       const bindings = soapHelpers.findBindings(wsdl);
       const portNames = [];
       const filesToMove = [
         'lib/jsonToXML.js',
         'lib/XMLToJson.js',
+        'lib/communicate.js',
       ];
 
       // ensure main app dir exsits, move lib files
@@ -38,12 +40,13 @@ function fetchWSDL(urlWSDL) {
       // generate port binding files
       bindings.forEach((binding) => {
         portNames.push(binding.attributes.name);
-
-        return portBuilder(baseDir, binding);
+        const serviceLocation =
+          soapHelpers.findServiceLocation(definitions, binding.attributes.name);
+        return portBuilder(baseDir, binding, serviceLocation);
       });
 
       // generate main app.js file
-      appBuilder(baseDir, wsdl, portNames);
+      appBuilder(baseDir, wsdl, portNames, definitions);
 
       // generate package.json
       packageBuilder(baseDir, appName);
