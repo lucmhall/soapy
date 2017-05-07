@@ -18,6 +18,7 @@ function fetchWSDL(urlWSDL) {
         'lib/jsonToXML.js',
         'lib/XMLToJson.js',
         'lib/communicate.js',
+        'lib/soapHelpers.js',
       ];
 
       // ensure main app dir exsits, move lib files
